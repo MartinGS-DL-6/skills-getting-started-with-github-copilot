@@ -75,36 +75,58 @@ section h3 {
 }
 
 .participants {
-  margin-top: 10px;
+  margin-top: 12px;
+  padding: 12px;
+  background: linear-gradient(180deg,#f7f9ff,#eef4ff);
+  border: 1px solid #d7e0fb;
+  border-radius: 8px;
 }
 
-.participants-list {
-  list-style: none;
-  margin: 8px 0 0 0;
-  padding: 0;
-  color: #444;
+.participants strong {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 8px;
+  color: #0d1b6b;
 }
 
-.participant-item {
+.participants-grid {
   display: flex;
-  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
   align-items: center;
-  padding: 4px 6px;
-  font-size: 14px;
-  background: linear-gradient(90deg, rgba(250,250,250,1) 0%, rgba(245,245,255,1) 100%);
-  border-radius: 3px;
-  margin-bottom: 6px;
 }
 
-.delete-btn {
-  cursor: pointer;
+.participant-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: #fff;
+  border: 1px solid #e6ecff;
+  border-radius: 999px;
+  font-size: 13px;
+  color: #24314a;
+  box-shadow: 0 1px 2px rgba(16,24,40,0.04);
+}
+
+.participant-name {
+  font-weight: 500;
+}
+
+.remove-btn {
+  appearance: none;
+  border: none;
+  background: transparent;
   color: #c62828;
-  font-weight: bold;
-  margin-left: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+  line-height: 1;
 }
 
-.delete-btn:hover {
-  color: #e53935;
+.remove-btn:hover {
+  color: #b71c1c;
+  transform: scale(1.05);
 }
 
 .no-participants {

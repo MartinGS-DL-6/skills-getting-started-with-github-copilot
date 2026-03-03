@@ -21,8 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const spotsLeft = details.max_participants - details.participants.length;
 
         const participantsHtml = details.participants && details.participants.length
-          ? `<div class="participants"><strong>Participants:</strong><ul class="participants-list">${details.participants.map(p => `<li class="participant-item">${p}<span class="delete-btn" data-email="${p}">✖</span></li>`).join("")}</ul></div>`
-          : `<div class="participants"><strong>Participants:</strong><p class="no-participants">No participants yet.</p></div>`;
+          ? `<div class="participants"><strong>Participants</strong><ul class="participants-grid">${details.participants.map(p => `<li class="participant-pill"><span class="participant-name">${p}</span><button class="remove-btn" data-email="${p}" aria-label="Remove ${p}">🗑️</button></li>`).join("")}</ul></div>`
+          : `<div class="participants"><strong>Participants</strong><p class="no-participants">No participants yet.</p></div>`;
 
         activityCard.innerHTML = `
           <h4>${name}</h4>
@@ -34,17 +34,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
         activitiesList.appendChild(activityCard);
 
-        // Attach delete handlers for this card
-        activityCard.querySelectorAll('.delete-btn').forEach(btn => {
-          btn.addEventListener('click', async () => {
+        // Attach remove handlers (trash button) for this card
+        activityCard.querySelectorAll('.remove-btn').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            e.stopPropagation();
             const email = btn.dataset.email;
+            if (!confirm(`Remove ${email} from ${name}?`)) return;
             try {
               const res = await fetch(
                 `/activities/${encodeURIComponent(name)}/signup?email=${encodeURIComponent(email)}`,
                 { method: 'DELETE' }
               );
               if (res.ok) {
-                // refresh list to update availability and participants
+                // visually indicate removal then refresh
+                const pill = btn.closest('.participant-pill');
+                if (pill) pill.style.opacity = '0.5';
                 fetchActivities();
               } else {
                 const err = await res.json();
